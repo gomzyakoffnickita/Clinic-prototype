@@ -1,0 +1,17 @@
+.editorial-section {
+  padding: var(--section-space) var(--gutter);
+  color: var(--color-navy);
+  background: var(--color-warm-white);
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+}
+
+@media (max-width: 1023px) {
+  .editorial-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,291 @@
+.site-header {
+  display: grid;
+  grid-template-columns: minmax(106px, 2fr) 3fr auto;
+  align-items: center;
+  gap: var(--grid-gap);
+  min-height: var(--header-height);
+  padding-inline: var(--gutter);
+}
+
+.site-header[hidden] {
+  display: none;
+}
+
+.site-header--compact {
+  position: fixed;
+  z-index: 5;
+  inset: 0 0 auto;
+  color: var(--color-navy);
+  background: var(--color-warm-white);
+}
+
+.site-header__logo {
+  display: grid;
+  width: min(116px, 100%);
+  min-height: 44px;
+  align-items: center;
+}
+
+.site-header--transparent {
+  background: transparent;
+  border-bottom: 0;
+}
+
+.site-header__logo::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 510 / 108;
+  background: black;
+  mask: url("/ek-clinic-wordmark.svg") center / contain no-repeat;
+}
+
+.site-header__tagline {
+  margin: 0;
+  font: 350 18px / 1.1 var(--font-editorial);
+}
+
+.site-header__nav {
+  display: flex;
+  grid-column: 3;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 clamp(16px, 3.25vw, 54px);
+  font: 400 13px / 1 var(--font-sans);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.site-header__nav a,
+.site-header__toggle,
+.site-menu__close {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-decoration: none;
+}
+
+.site-header__toggle,
+.site-menu__close {
+  cursor: pointer;
+  text-transform: inherit;
+}
+
+.site-header__nav :is(.site-header__link, .site-header__toggle) {
+  position: relative;
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.site-header__nav :is(.site-header__link, .site-header__toggle)::before {
+  position: absolute;
+  inset-inline-end: calc(100% + 5px);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  content: "";
+}
+
+.site-header__nav
+  :is(.site-header__link, .site-header__toggle):is(:hover, :focus-visible) {
+  color: color-mix(in srgb, var(--color-navy) 70%, var(--color-pale-grey));
+  transform: scale(1.06);
+  text-decoration: none;
+}
+
+.site-header__nav
+  :is(.site-header__link, .site-header__toggle):is(
+    :hover,
+    :focus-visible
+  )::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__nav :is(.site-header__link, .site-header__toggle),
+  .site-header__nav :is(.site-header__link, .site-header__toggle)::before {
+    transition: none;
+  }
+
+  .site-header__nav
+    :is(.site-header__link, .site-header__toggle):is(:hover, :focus-visible) {
+    transform: none;
+  }
+}
+
+.site-menu__close:hover {
+  text-decoration: underline;
+}
+
+.site-header--hero .site-header__toggle {
+  display: none;
+}
+
+.site-menu {
+  position: fixed;
+  inset: 0 var(--gutter) auto auto;
+  width: clamp(360px, 30vw, 680px);
+  overflow-y: auto;
+  max-width: calc(100% - 2 * var(--gutter));
+  max-height: calc(100dvh - var(--gutter));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--color-navy);
+  background: var(--color-warm-white);
+}
+
+.site-menu::backdrop {
+  background: rgb(255 252 248 / 55%);
+  backdrop-filter: blur(10px);
+}
+
+.site-menu__panel {
+  padding: 0 20px;
+}
+
+.site-menu__close {
+  display: flex;
+  margin-inline-start: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.site-menu__links {
+  display: grid;
+  padding-block: 40px 70px;
+  counter-reset: menu-link;
+}
+
+.site-menu__links a {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  min-height: 44px;
+  align-items: center;
+  font: 350 clamp(28px, 3.5vw, 36px) / 1.12 var(--font-editorial);
+  text-decoration: none;
+  transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-menu__links a::before {
+  counter-increment: menu-link;
+  content: counter(menu-link) ".";
+  font: 400 13px/1 var(--font-sans);
+}
+.site-menu__preview {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: start;
+  gap: 20px;
+}
+.site-menu__preview p {
+  margin: 0;
+  font-size: clamp(10px, 1.5vw, 15px);
+  line-height: 1.4;
+}
+
+.site-menu__links a:hover,
+.site-menu__links a:focus-visible {
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .site-menu__links:has(a:hover) a:not(:hover, :focus-visible) {
+    opacity: 0.1;
+  }
+}
+
+.site-menu__links:has(a:focus-visible) a:not(:focus-visible, :hover) {
+  opacity: 0.1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu__links a {
+    transition: none;
+  }
+}
+
+.site-menu__preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.site-menu__contact {
+  margin: 36px -20px 0;
+  padding: 28px 20px;
+  color: var(--color-warm-white);
+  background: var(--color-navy);
+  font-size: 13px;
+}
+
+.site-menu__contact-row {
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+.site-menu__contact-row p {
+  margin: 0;
+}
+.site-menu__contact-row p:first-child {
+  margin-bottom: 6px;
+}
+.site-menu__contact a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.site-menu__contact a:is(:hover, :focus-visible) {
+  text-decoration: underline;
+}
+.site-menu__note {
+  margin: 20px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-menu[open] {
+    animation: menu-open 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes menu-open {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .site-header {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+
+  .site-header__tagline,
+  .site-header .site-header__link:not([href="#contact"]) {
+    display: none;
+  }
+
+  .site-header__nav {
+    grid-column: 2;
+  }
+
+  .site-header--hero .site-header__toggle {
+    display: inline-flex;
+  }
+
+  .site-menu {
+    width: calc(100% - 2 * var(--gutter));
+  }
+}
