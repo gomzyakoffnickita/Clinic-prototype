@@ -169,12 +169,6 @@
   .services-page__hero-copy {
     position: relative;
   }
-  .services-page__hero > video {
-    display: none;
-  }
-  .services-page__hero {
-    background: url("/editorial/light.avif") center / cover;
-  }
 }
 .services-page__eyebrow {
   margin: 0;

@@ -229,14 +229,13 @@ function ServicesPage() {
           </div>
           <video
             src={`${assets}home-method__portrait.mp4`}
-            poster={`${assets}light.avif`}
             autoPlay={
               !window.matchMedia("(prefers-reduced-motion: reduce)").matches
             }
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             aria-hidden="true"
           />
           <div className="services-page__hero-copy">

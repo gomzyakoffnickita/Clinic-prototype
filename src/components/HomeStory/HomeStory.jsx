@@ -99,7 +99,7 @@ export function Method() {
           <video
             ref={mediaRef}
             src={`${assets}home-method__portrait.mp4`}
-            poster={`${assets}light.avif`}
+            poster={`${assets}home-method__portrait-still.jpg`}
             autoPlay={
               !window.matchMedia("(prefers-reduced-motion: reduce)").matches
             }
@@ -111,7 +111,7 @@ export function Method() {
           />
           <img
             className="home-method__still"
-            src={`${assets}light.avif`}
+            src={`${assets}home-method__portrait-still.jpg`}
             alt=""
             loading="lazy"
           />
