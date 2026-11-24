@@ -33,10 +33,12 @@ npm run dev
 
 ## Медиа
 
-- Первый экран использует `public/hero/hero-1.mp4`. На смартфонах его стоп-кадр `public/hero/hero-1-still.jpg` служит постером.
+- Первый экран использует `public/hero/hero-1.mp4` и его стоп-кадр `public/hero/hero-1-still.jpg` на всех экранах.
 - `public/hero/portrait-f*.jpg` — портрет для второго экрана в двух размерах. Источник — [фото Анастасии Климец](https://www.pexels.com/photo/close-up-shot-of-a-woman-lying-on-white-surface-14821873/) по [лицензии Pexels](https://www.pexels.com/license/).
 - `public/editorial/` — изображения и видео секций трёх страниц.
 - `public/before-after/` — пары `before-1.jpg` / `after-1.jpg` и далее. Подписи процедур задаются в `comparisonCases` в `HomeEditorial.jsx`.
 - Source Serif 4 для редакционных заголовков и Onest для основного текста и навигации загружаются из локальных кириллических и латинских WOFF2. Лицензии SIL Open Font License хранятся в `public/fonts/`. [Source Serif 4](https://fonts.google.com/specimen/Source+Serif+4), [Onest](https://fonts.google.com/specimen/Onest).
 
-Для размещения демонстрации на GitHub Pages публикуйте содержимое `dist/`. Сборка использует относительный Vite `base`.
+## Публикация на GitHub Pages
+
+В настройках Pages источник публикации — ветка `gh-pages`, папка `/ (root)`. Команда `npm run deploy` собирает проект и публикует содержимое `dist/` в эту ветку. Vite собирает страницы с префиксом `/Clinic-prototype/`.

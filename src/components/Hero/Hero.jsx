@@ -15,21 +15,16 @@ export function Hero({ onMenu, onExitChange }) {
   const videoRef = useRef(null);
   const portraitRef = useRef(null);
   const [reduce, setReduce] = useState(() => window.matchMedia(reducedMotion).matches);
-  const [mobile, setMobile] = useState(() => window.matchMedia(mobileMedia).matches);
   const [exited, setExited] = useState(false);
   const [portraitVisible, setPortraitVisible] = useState(false);
 
   useEffect(() => {
     const motionPreference = window.matchMedia(reducedMotion);
-    const viewport = window.matchMedia(mobileMedia);
     const updateMotion = () => setReduce(motionPreference.matches);
-    const updateViewport = () => setMobile(viewport.matches);
     motionPreference.addEventListener('change', updateMotion);
-    viewport.addEventListener('change', updateViewport);
 
     return () => {
       motionPreference.removeEventListener('change', updateMotion);
-      viewport.removeEventListener('change', updateViewport);
     };
   }, []);
 
@@ -111,7 +106,7 @@ export function Hero({ onMenu, onExitChange }) {
           ref={videoRef}
           className="hero__asset hero__asset--video"
           src={reduce ? undefined : `${assetBase}hero-1.mp4`}
-          poster={`${assetBase}${mobile ? 'hero-1-still.jpg' : 'care-poster.jpg'}`}
+          poster={`${assetBase}hero-1-still.jpg`}
           muted
           loop
           playsInline
