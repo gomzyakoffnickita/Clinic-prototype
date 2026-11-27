@@ -28,27 +28,31 @@ function App() {
   useLayoutEffect(() => {
     const motion = gsap.matchMedia();
 
-    motion.add("(prefers-reduced-motion: no-preference)", () => {
-      const headings = mainRef.current.querySelectorAll("h2");
+    motion.add(
+      "(prefers-reduced-motion: no-preference)",
+      () => {
+        const headings = mainRef.current.querySelectorAll("h2");
 
-      headings.forEach((heading) => {
-        gsap.fromTo(
-          heading,
-          { autoAlpha: 0, y: 20 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: heading,
-              start: "top 90%",
-              once: true,
+        headings.forEach((heading) => {
+          gsap.fromTo(
+            heading,
+            { autoAlpha: 0, y: 20 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.85,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: heading,
+                start: "top 90%",
+                once: true,
+              },
             },
-          },
-        );
-      });
-    }, mainRef.current);
+          );
+        });
+      },
+      mainRef.current,
+    );
 
     return () => motion.revert();
   }, []);
@@ -76,8 +80,17 @@ function App() {
       <a className="skip-link" href="#introduction">
         Перейти к содержанию
       </a>
-      <Header hidden={!pastHero} onMenu={openMenu} servicesHref="services/" approachHref="about/" />
-      <SiteMenu dialogRef={dialogRef} servicesHref="services/" approachHref="about/" />
+      <Header
+        hidden={!pastHero}
+        onMenu={openMenu}
+        servicesHref="services/"
+        approachHref="about/"
+      />
+      <SiteMenu
+        dialogRef={dialogRef}
+        servicesHref="services/"
+        approachHref="about/"
+      />
       <main id="top" tabIndex={-1} ref={mainRef}>
         <Hero onMenu={openMenu} onExitChange={setPastHero} />
         <HomeIntro />
