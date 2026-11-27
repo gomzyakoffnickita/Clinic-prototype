@@ -1,26 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
+import { CLINIC } from "../../data/clinic";
+import {
+  links,
+  defaultPreview,
+  previewTexts,
+  menuLinks,
+} from "../../data/navigation";
+
 import "./Header.css";
-
-const links = [
-  { href: "#services", label: "Услуги", preview: "lips" },
-  { href: "#approach", label: "О клинике", preview: "portrait" },
-  { href: "#contact", label: "Контакты", preview: "materials" },
-];
-
-const defaultPreview = "consultation";
-const previewTexts = {
-  consultation:
-    "Добро пожаловать в EK Clinic — пространство эстетики и заботы о вашей красоте. Здесь естественность встречается с современным подходом к косметологии.",
-  lips: "Подчеркнуть природную красоту, сохранив индивидуальность. Познакомьтесь с нашими процедурами, направленными на гармонию и эстетику лица.",
-  portrait:
-    "EK Clinic — место, где красота начинается с внимания к деталям. Мы ценим индивидуальность, естественные пропорции и осознанный подход к эстетике.",
-  materials:
-    "Первый шаг к знакомству с EK Clinic — консультация специалиста. Свяжитесь с нами удобным способом, чтобы обсудить ваши пожелания и возможности коррекции.",
-};
-const menuLinks = [
-  { href: "#top", label: "Главная", preview: defaultPreview },
-  ...links,
-];
 
 export function Header({
   hero = false,
@@ -40,11 +27,12 @@ export function Header({
       <a
         className="site-header__logo"
         href={homeHref}
-        aria-label="EK Clinic, на главную"
+        aria-label={`${CLINIC.name}, на главную`}
+        style={{
+          "--clinic-logo": `url("${CLINIC.logo}")`,
+        }}
       />
-      {hero && (
-        <p className="site-header__tagline">Эстетическая косметология</p>
-      )}
+      {hero && <p className="site-header__tagline">{CLINIC.tagline}</p>}
       <nav className="site-header__nav" aria-label="Основная навигация">
         <button
           type="button"
@@ -178,21 +166,25 @@ export function SiteMenu({
         </div>
         <div className="site-menu__contact">
           <div className="site-menu__contact-row">
-            <p>Онлайн-запись пока недоступна</p>
+            <p>{CLINIC.bookingStatus}</p>
+
             <a href={contactHref} onClick={followLink}>
               Контакты клиники
             </a>
           </div>
+
           <div className="site-menu__contact-row">
             <p>Часы работы</p>
+
             <p>
-              Пн–Пт: 10:00–20:00
+              {CLINIC.openingHours.weekdays}
               <br />
-              Сб–Вс: выходной
+              {CLINIC.openingHours.weekend}
             </p>
           </div>
+
           <p className="site-menu__note">
-            © 2026 EK Clinic · Демонстрационная концепция сайта
+            © {CLINIC.copyrightYear} {CLINIC.name} · {CLINIC.demoNote}
           </p>
         </div>
       </div>

@@ -37,7 +37,7 @@
   width: 100%;
   aspect-ratio: 510 / 108;
   background: black;
-  mask: url("/ek-clinic-wordmark.svg") center / contain no-repeat;
+  mask: var(--clinic-logo) center / contain no-repeat;
 }
 
 .site-header__tagline {
