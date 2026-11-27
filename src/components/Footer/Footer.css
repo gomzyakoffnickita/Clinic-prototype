@@ -14,7 +14,7 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: rgb(255 252 248 / 35%);
+  background: color-mix(in srgb, var(--color-warm-white) 35%, transparent);
   pointer-events: none;
   content: "";
 }
@@ -33,9 +33,9 @@
   display: block;
   width: min(35vw, 540px);
   min-width: min(220px, 75vw);
-  aspect-ratio: 510 / 108;
-  color: #000;
-  filter: drop-shadow(0 2px 12px rgb(255 252 248 / 65%));
+  aspect-ratio: var(--clinic-logo-aspect);
+  color: var(--color-logo);
+  filter: drop-shadow(0 2px 12px color-mix(in srgb, var(--color-warm-white) 65%, transparent));
 }
 
 .site-footer__wordmark::before {
@@ -43,6 +43,6 @@
   width: 100%;
   height: 100%;
   background: currentColor;
-  mask: url("/ek-clinic-wordmark.svg") center / contain no-repeat;
+  mask: var(--clinic-logo) center / contain no-repeat;
   content: "";
 }

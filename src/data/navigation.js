@@ -1,4 +1,6 @@
-import { CLINIC } from "./clinic";
+import { CLINIC } from "./clinic.js";
+
+const assets = `${import.meta.env.BASE_URL}editorial/`;
 
 export const links = [
   {
@@ -19,6 +21,13 @@ export const links = [
 ];
 
 export const defaultPreview = "consultation";
+
+export const previewImages = {
+  consultation: `${assets}consultation.jpg`,
+  lips: `${assets}lips.jpg`,
+  portrait: `${assets}portrait.jpg`,
+  materials: `${assets}materials.jpg`,
+};
 
 export const previewTexts = {
   consultation: `Добро пожаловать в ${CLINIC.name} — пространство эстетики и заботы о вашей красоте. Здесь естественность встречается с современным подходом к косметологии.`,

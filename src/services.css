@@ -5,7 +5,6 @@
 .services-journey__layer { position: relative; z-index: 2; padding: 80px 0 48px; background: linear-gradient(transparent, var(--color-warm-white) 10%); }
 .services-journey__images { width: calc((100% - 20px) / 3); margin: 0 auto; transform-origin: center; }
 .services-journey__images img { display: block; width: 100%; aspect-ratio: 1.381; object-fit: cover; }
-.services-journey__images img:first-child { object-position: center top; }
 .services-journey__labels { position: relative; z-index: 2; display: flex; justify-content: space-between; width: 67%; margin: 0 auto; padding-bottom: 32px; background: var(--color-warm-white); font-size: 12px; text-transform: uppercase; }
 @media (max-width: 1023px) { .services-journey__images { width: 67%; } .services-journey__labels { width: 100%; gap: 8px; font-size: 10px; } }
 @media (prefers-reduced-motion: reduce) { .services-journey__heading { position: static; margin-bottom: 48px; } }
@@ -26,7 +25,7 @@
 .services-scene__background::after {
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 38%);
+  background: color-mix(in srgb, var(--color-ink) 38%, transparent);
   content: "";
 }
 .services-scene__image {
@@ -79,12 +78,12 @@
   min-height: 200lvh;
   overflow: clip;
   color: var(--color-white);
-  background: #d8d4d0;
+  background: var(--color-media-loading);
 }
 .services-page__hero::after {
   position: absolute;
   inset: 45% 0 0;
-  background: linear-gradient(transparent, rgb(20 27 45 / 48%));
+  background: linear-gradient(transparent, color-mix(in srgb, var(--color-media-shade) 48%, transparent));
   content: "";
 }
 .services-page__hero-header .site-header {
@@ -123,7 +122,7 @@
   z-index: 2;
   min-height: 100lvh;
   padding: 50lvh var(--gutter) 20lvh 50%;
-  background: linear-gradient(transparent, rgb(0 0 0 / 28%));
+  background: linear-gradient(transparent, color-mix(in srgb, var(--color-ink) 28%, transparent));
   backdrop-filter: blur(5px);
   mask-image: linear-gradient(transparent, black 45lvh);
 }
@@ -133,7 +132,7 @@
   font: 350 clamp(28px, 3vw, 44px)/1.1 var(--font-editorial);
 }
 .services-page__hero-description a {
-  color: white;
+  color: var(--color-white);
   display: inline-flex;
   align-items: center;
   min-height: 44px;

@@ -8,69 +8,20 @@ import { Contact } from "./components/Contact/Contact.jsx";
 import { Footer } from "./components/Footer/Footer.jsx";
 import "./fonts.css";
 import "./style.css";
+import { SERVICES } from "./data/services.js";
 import "./services.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const assets = "../editorial/";
-const groups = [
-  {
-    id: "lips",
-    number: "01",
-    title: "Увеличение и коррекция губ",
-    image: "services-page__media-1.jpg",
-    description:
-      "Инъекционные филлеры применяют для изменения объёма и контура губ. Врач оценивает анатомию, обсуждает желаемые изменения, ограничения и риски. Результат временный; выбор метода и препарата требует очной консультации.",
-    topics: ["Форма губ", "Объём", "Пропорции"],
-  },
-  {
-    id: "expression",
-    number: "02",
-    title: "Коррекция носогубных складок",
-    image: "services-page__media-2.jpg",
-    description:
-      "Носогубные складки проходят от крыльев носа к уголкам рта. Для смягчения их выраженности могут применяться филлеры. Подход выбирают после оценки тканей и пропорций лица; ожидаемый эффект и возможные осложнения обсуждаются с врачом.",
-    topics: ["Выраженность складок", "Пропорции лица", "Консультация"],
-  },
-  {
-    id: "skin",
-    number: "03",
-    title: "Full Face",
-    image: "services-page__media-3.jpg",
-    description:
-      "Комплексное рассмотрение лица с учётом взаимосвязи его зон и пропорций. Full Face не обозначает одну стандартную процедуру: состав плана, необходимость отдельных вмешательств и их последовательность обсуждаются индивидуально. Конкретный протокол EK Clinic уточняется на консультации.",
-    topics: [
-      "Пропорции лица",
-      "Индивидуальный план",
-      "Последовательность процедур",
-    ],
-  },
-  {
-    id: "vector-lift",
-    number: "04",
-    title: "Векторный лифтинг",
-    image: "services-page__media-4.jpg",
-    description:
-      "Инъекционная методика коррекции контуров лица: препарат вводят по выбранным направлениям — векторам, учитывая анатомию и состояние тканей. Такой подход применяют при снижении чёткости овала и возрастных изменениях. Методика, выбор препарата, ожидаемый эффект и ограничения обсуждаются с врачом на консультации.",
-    topics: ["Оценка тканей", "Выбор методики", "Обсуждение ограничений"],
-  },
-  {
-    id: "botulinum",
-    number: "05",
-    title: "Ботулинотерапия",
-    image: "services-page__media-5.jpg",
-    description:
-      "Инъекции ботулинического токсина временно уменьшают активность отдельных мышц и выраженность связанных с их сокращением морщин. Зоны коррекции и возможность процедуры определяет врач. Эффект развивается постепенно и ограничен по времени; противопоказания и риски обсуждаются на консультации.",
-    topics: ["Мимические морщины", "Оценка мимики", "Индивидуальный план"],
-  },
-];
 
 function ServicesPage() {
+  const { hero, catalog, scene, journey } = SERVICES;
+  const { groups } = catalog;
   const dialogRef = useRef(null);
   const catalogRef = useRef(null);
   const heroRef = useRef(null);
   const [pastHero, setPastHero] = useState(false);
-  const [activeId, setActiveId] = useState(groups[0].id);
+  const [activeId, setActiveId] = useState(groups[0]?.id);
 
   useLayoutEffect(() => {
     const headerTrigger = ScrollTrigger.create({
@@ -210,7 +161,6 @@ function ServicesPage() {
         homeHref="../"
         servicesHref="#catalog"
         approachHref="../about/"
-        assetBase={assets}
       />
       <main className="services-page" id="services-main" tabIndex={-1}>
         <section
@@ -228,7 +178,7 @@ function ServicesPage() {
             />
           </div>
           <video
-            src={`${assets}home-method__portrait.mp4`}
+            src={hero.video}
             autoPlay={
               !window.matchMedia("(prefers-reduced-motion: reduce)").matches
             }
@@ -239,20 +189,15 @@ function ServicesPage() {
             aria-hidden="true"
           />
           <div className="services-page__hero-copy">
-            <p className="services-page__eyebrow">EK Clinic / Услуги</p>
+            <p className="services-page__eyebrow">{hero.eyebrow}</p>
             <h1 id="services-title">
-              <span>Эстетика начинается</span>
-              <span>с понимания деталей.</span>
+              {hero.title.map((line, index) => <span key={index}>{line}</span>)}
             </h1>
           </div>
           <div className="services-page__hero-description">
-            <p>
-              План начинается с разговора о том, что важно именно вам. На
-              консультации можно обсудить пожелания и познакомиться с подходом
-              клиники.
-            </p>
+            <p>{hero.description}</p>
             <a
-              href="#catalog"
+              href={hero.link.href}
               onClick={(event) => {
                 if (
                   event.metaKey ||
@@ -263,7 +208,7 @@ function ServicesPage() {
                   return;
                 event.preventDefault();
                 const catalog = catalogRef.current;
-                window.history.pushState(null, "", "#catalog");
+                window.history.pushState(null, "", hero.link.href);
                 catalog.focus({ preventScroll: true });
                 catalog.scrollIntoView({
                   behavior: window.matchMedia(
@@ -275,7 +220,7 @@ function ServicesPage() {
                 });
               }}
             >
-              Смотреть направления
+              {hero.link.label}
             </a>
           </div>
         </section>
@@ -288,13 +233,13 @@ function ServicesPage() {
           aria-labelledby="catalog-title"
         >
           <div className="services-page__catalog-head services-page__reveal">
-            <p className="services-page__eyebrow">Направления EK Clinic</p>
-            <h2 id="catalog-title">Выберите тему для консультации.</h2>
+            <p className="services-page__eyebrow">{catalog.eyebrow}</p>
+            <h2 id="catalog-title">{catalog.title}</h2>
           </div>
           <div className="services-page__catalog-grid">
             <nav
               className="services-page__index"
-              aria-label="Направления услуг"
+              aria-label={catalog.ariaLabel}
             >
               {groups.map((group) => (
                 <div
@@ -339,8 +284,8 @@ function ServicesPage() {
                   <div className="services-page__media">
                     {group.image && (
                       <img
-                        src={`${assets}${group.image}`}
-                        alt="Иллюстративный кадр направления"
+                        src={group.image}
+                        alt={group.imageAlt ?? catalog.imageAlt}
                         loading="lazy"
                       />
                     )}
@@ -348,7 +293,7 @@ function ServicesPage() {
                   <div className="services-page__group-copy services-page__reveal">
                     <span className="services-page__eyebrow">
                       {group.number} / {String(groups.length).padStart(2, "0")}
-                      {group.image ? " · Иллюстративное изображение" : ""}
+                      {group.image ? ` · ${catalog.imageCaption}` : ""}
                     </span>
                     <h3 id={`${group.id}-title`} tabIndex={-1}>
                       {group.title}
@@ -368,23 +313,18 @@ function ServicesPage() {
 
         <section
           className="services-scene"
-          aria-label="Подготовка и забота после процедуры"
+          aria-label={scene.ariaLabel}
         >
           <div className="services-scene__background">
             <img
               className="services-scene__image"
-              src={`${assets}services-care.jpg`}
+              src={scene.image}
               alt=""
               loading="lazy"
             />
           </div>
           <div className="services-scene__content">
-            <p className="services-scene__text">
-              Забота начинается ещё до процедуры и продолжается после неё. На
-              консультации мы обсуждаем ваши пожелания, подготовку и вопросы
-              восстановления. Индивидуальные рекомендации помогают пройти каждый
-              этап осознанно и с вниманием к себе.
-            </p>
+            <p className="services-scene__text">{scene.description}</p>
           </div>
         </section>
 
@@ -394,33 +334,24 @@ function ServicesPage() {
           aria-labelledby="services-journey-title"
         >
           <div className="services-journey__heading">
-            <h2 id="services-journey-title">Ваш путь к себе</h2>
-            <p>Эстетика с вниманием к индивидуальности.</p>
+            <h2 id="services-journey-title">{journey.title}</h2>
+            <p>{journey.description}</p>
           </div>
           <div className="services-journey__layer">
             <div className="services-journey__images">
-              <img
-                src={`${assets}services-journey__images-1.jpg`}
-                alt="Иллюстративный крупный план лица модели"
-                loading="lazy"
-              />
-              <img
-                src={`${assets}lips.jpg`}
-                alt="Иллюстративный крупный план губ"
-                loading="lazy"
-              />
+              {journey.images.map(({ src, alt, position }) => (
+                <img key={src} src={src} alt={alt} style={{ objectPosition: position }} loading="lazy" />
+              ))}
             </div>
           </div>
           <div className="services-journey__labels">
-            <span>Естественность</span>
-            <span>Гармония</span>
-            <span>Забота</span>
+            {journey.labels.map((label) => <span key={label}>{label}</span>)}
           </div>
         </section>
 
         <Contact servicesHref="#catalog" approachHref="../about/" />
       </main>
-      <Footer assetBase={assets} homeHref="../" />
+      <Footer homeHref="../" />
     </>
   );
 }

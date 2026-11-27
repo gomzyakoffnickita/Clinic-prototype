@@ -19,11 +19,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 45%;
 }
 
-.hero__asset--still {
-  object-position: center 58%;
+.hero__asset--video {
+  object-position: var(--hero-video-position);
 }
 
 .hero__navigation {
@@ -70,6 +69,6 @@
 
 @media (max-width: 767px) {
   .hero__asset--video {
-    object-position: 32% center;
+    object-position: var(--hero-video-mobile-position, var(--hero-video-position));
   }
 }

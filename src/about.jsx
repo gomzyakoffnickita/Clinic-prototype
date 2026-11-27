@@ -8,19 +8,13 @@ import { Footer } from "./components/Footer/Footer.jsx";
 import { PageTransition } from "./components/PageTransition.jsx";
 import "./fonts.css";
 import "./style.css";
+import { ABOUT } from "./data/about.js";
 import "./about.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const teamPortrait = "../editorial/about_team-1.jpg";
-const specialists = [
-  { image: "about_team-2.jpg", name: "Кристина Евгеньевна", description: "" },
-  { image: "about_team-3.jpg", name: "Ксения Витальевна", description: "" },
-  { image: "about_team-4.jpg", name: "Елена Олеговна", description: "" },
-  { image: "about_team-5.jpg", name: "Светлана Анатольевна", description: "" },
-];
-
 function AboutPage() {
+  const { hero, intro, team, specialists, consultation, contact } = ABOUT;
   const pageRef = useRef(null);
   const heroRef = useRef(null);
   const insetVideoRef = useRef(null);
@@ -181,7 +175,6 @@ function AboutPage() {
         homeHref="../"
         servicesHref="../services/"
         approachHref="#about-intro"
-        assetBase="../editorial/"
       />
       <main className="about-page" id="top" ref={pageRef} tabIndex={-1}>
         <section
@@ -201,31 +194,28 @@ function AboutPage() {
           <div className="about-hero__backdrop">
             <img
               className="about-hero__background"
-              src="../editorial/about-hero.jpg"
+              src={hero.image} style={{ objectPosition: hero.position }}
               alt=""
             />
           </div>
           <div className="about-hero__content about-grid">
             <h1 id="about-title" data-about-reveal>
-              <span>Меняемся.</span>
-              <span>Остаёмся собой.</span>
+              {hero.title.map((line, index) => <span key={index}>{line}</span>)}
             </h1>
             <div className="about-hero__inset" data-about-reveal>
               <video
                 className="about-hero__video"
                 ref={insetVideoRef}
-                src="../editorial/about-hero-inset.mp4"
-                poster="../editorial/about-hero-inset.jpg"
+                src={hero.video}
+                style={{ objectPosition: hero.videoPosition }}
+                poster={hero.poster}
                 preload="none"
                 muted
                 loop
                 playsInline
                 aria-hidden="true"
               />
-              <p>
-                Пространство эстетики, внимания к деталям и индивидуального
-                подхода.
-              </p>
+              <p>{hero.description}</p>
             </div>
           </div>
         </section>
@@ -237,21 +227,13 @@ function AboutPage() {
           aria-labelledby="about-intro-title"
         >
           <p className="about-page__eyebrow" id="about-intro-title">
-            О клинике
+            {intro.eyebrow}
           </p>
           <div className="about-intro__copy">
-            <h2 data-about-reveal>
-              EK Clinic — место, где красота начинается с внимания к деталям. Мы
-              ценим индивидуальность, естественные пропорции и осознанный подход
-              к эстетике.
-            </h2>
-            <p data-about-reveal>
-              Знакомство начинается с разговора. Расскажите, какие изменения вам
-              близки, что хочется сохранить и какие вопросы важно обсудить.
-              Решение о процедуре принимается после консультации специалиста.
-            </p>
-            <a className="about-page__link" href="#contact">
-              Контакты клиники
+            <h2 data-about-reveal>{intro.title}</h2>
+            <p data-about-reveal>{intro.description}</p>
+            <a className="about-page__link" href={contact.href}>
+              {contact.label}
             </a>
           </div>
         </section>
@@ -263,21 +245,23 @@ function AboutPage() {
           <div className="about-team__frame">
             <img
               className="about-team__portrait"
-              src={teamPortrait}
-              alt="Портрет в интерьере"
+              src={team.portrait}
+              alt={team.portraitAlt}
+              style={{ objectPosition: team.portraitPosition }}
               loading="lazy"
             />
           </div>
           <div className="about-team__detail">
             <img
               className="about-team__detail-image"
-              src="../editorial/about-team__detail-image.jpg"
+              src={team.detail}
+              style={{ objectPosition: team.detailPosition }}
               alt=""
               loading="lazy"
             />
           </div>
           <h2 id="about-team-title" data-about-reveal>
-            Знакомство с командой EK Clinic.
+            {team.title}
           </h2>
         </section>
 
@@ -286,23 +270,24 @@ function AboutPage() {
           aria-labelledby="about-profile-title"
         >
           <h2 className="visually-hidden" id="about-profile-title">
-            Специалисты клиники
+            {specialists.title}
           </h2>
-          {specialists.map(({ image, name, description }) => (
+          {specialists.items.map(({ image, name, description, role, position }) => (
             <article className="about-profile__row about-grid" key={image}>
               <div className="about-profile__identity">
-                <p className="about-profile__role">Врач-косметолог</p>
+                <p className="about-profile__role">{role ?? specialists.role}</p>
                 <h3>{name}</h3>
               </div>
               <img
                 className="about-profile__portrait"
-                src={`../editorial/${image}`}
+                src={image}
+                style={{ objectPosition: position ?? specialists.position }}
                 alt=""
                 loading="lazy"
                 decoding="async"
               />
               <p className="about-profile__copy">
-                {description || "Здесь появится описание специалиста."}
+                {description || specialists.placeholder}
               </p>
             </article>
           ))}
@@ -314,11 +299,12 @@ function AboutPage() {
         >
           <div className="about-consultation__intro">
             <h2 id="about-consultation-title" data-about-reveal>
-              Первая консультация
+              {consultation.title}
             </h2>
             <img
               className="about-consultation__image"
-              src="../editorial/about-hero.jpg"
+              src={consultation.image}
+              style={{ objectPosition: consultation.position }}
               alt=""
               loading="lazy"
               decoding="async"
@@ -326,36 +312,21 @@ function AboutPage() {
           </div>
           <div className="about-consultation__body" data-about-reveal>
             <ol className="about-consultation__steps" role="list">
-              <li className="about-consultation__step">
-                <h3>Расскажите о пожеланиях</h3>
-                <p>
-                  Поделитесь тем, что хочется изменить, какие черты важно
-                  сохранить и какие вопросы вас волнуют.
-                </p>
-              </li>
-              <li className="about-consultation__step">
-                <h3>Обсудите варианты с врачом</h3>
-                <p>
-                  Спросите, какие варианты подходят в вашем случае, чего от них
-                  ожидать и какие риски стоит учитывать.
-                </p>
-              </li>
-              <li className="about-consultation__step">
-                <h3>Решите, как двигаться дальше</h3>
-                <p>
-                  Уточните, как подготовиться к выбранной процедуре и чего
-                  ожидать в период восстановления.
-                </p>
-              </li>
+              {consultation.steps.map(({ title, description }, index) => (
+                <li className="about-consultation__step" key={index}>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </li>
+              ))}
             </ol>
-            <a className="about-consultation__link" href="#contact">
-              Контакты клиники
+            <a className="about-consultation__link" href={contact.href}>
+              {contact.label}
             </a>
           </div>
         </section>
         <Contact servicesHref="../services/" approachHref="#about-intro" />
       </main>
-      <Footer assetBase="../editorial/" homeHref="../" />
+      <Footer homeHref="../" />
     </>
   );
 }

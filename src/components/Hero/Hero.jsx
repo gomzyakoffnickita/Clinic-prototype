@@ -123,6 +123,10 @@ export function Hero({ onMenu, onExitChange }) {
           className="hero__asset hero__asset--video"
           src={reduce ? undefined : heroContent.video.src}
           poster={heroContent.video.poster}
+          style={{
+            "--hero-video-position": heroContent.video.position,
+            "--hero-video-mobile-position": heroContent.video.mobilePosition,
+          }}
           muted
           loop
           playsInline
@@ -141,6 +145,7 @@ export function Hero({ onMenu, onExitChange }) {
           <img
             className="hero__asset hero__asset--still"
             src={heroContent.portrait.desktop.src}
+            style={{ objectPosition: heroContent.portrait.position }}
             width={heroContent.portrait.desktop.width}
             height={heroContent.portrait.desktop.height}
             alt=""

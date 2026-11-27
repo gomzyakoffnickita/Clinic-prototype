@@ -1,21 +1,7 @@
+@import "./theme.css";
+
 :root {
-  --color-navy: #1e305e;
-  --color-warm-white: #fffcf8;
-  --color-white: #ffffff;
-  --color-pale-grey: #a79f9c;
-  --color-soft-surface: color-mix(
-    in srgb,
-    var(--color-pale-grey) 16%,
-    var(--color-warm-white)
-  );
-  --color-line: color-mix(
-    in srgb,
-    var(--color-navy) 25%,
-    var(--color-warm-white)
-  );
   --header-height: 48px;
-  --font-sans: Onest, Arial, sans-serif;
-  --font-editorial: "Source Serif 4", Georgia, serif;
   --gutter: 20px;
   --grid-gap: 10px;
   --section-space: 120px;

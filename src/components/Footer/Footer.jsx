@@ -2,11 +2,12 @@ import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { CLINIC } from "../../data/clinic.js";
 import "./Footer.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Footer({ assetBase = `${import.meta.env.BASE_URL}editorial/`, homeHref = "#top" }) {
+export function Footer({ homeHref = "#top" }) {
   const sceneRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -69,7 +70,7 @@ export function Footer({ assetBase = `${import.meta.env.BASE_URL}editorial/`, ho
       <div className="site-footer__scene" ref={sceneRef}>
         <video
           className="site-footer__video"
-          src={`${assetBase}footer.mp4`}
+          src={CLINIC.footerVideo}
           ref={videoRef}
           muted
           loop
@@ -77,7 +78,12 @@ export function Footer({ assetBase = `${import.meta.env.BASE_URL}editorial/`, ho
           preload="metadata"
           aria-hidden="true"
         />
-        <a className="site-footer__wordmark" href={homeHref} aria-label="EK Clinic, на главную" />
+        <a
+          className="site-footer__wordmark"
+          href={homeHref}
+          aria-label={`${CLINIC.name}, на главную`}
+          style={{ "--clinic-logo": `url("${CLINIC.logo}")` }}
+        />
       </div>
     </footer>
   );

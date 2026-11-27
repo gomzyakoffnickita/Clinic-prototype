@@ -1,0 +1,24 @@
+:root {
+  --color-navy: #1e305e;
+  --color-warm-white: #fffcf8;
+  --color-white: #ffffff;
+  --color-pale-grey: #a79f9c;
+  --color-soft-surface: color-mix(
+    in srgb,
+    var(--color-pale-grey) 16%,
+    var(--color-warm-white)
+  );
+  --color-line: color-mix(
+    in srgb,
+    var(--color-navy) 25%,
+    var(--color-warm-white)
+  );
+  --font-sans: Onest, Arial, sans-serif;
+  --font-editorial: "Source Serif 4", Georgia, serif;
+  --color-logo: #000000;
+  --clinic-logo-aspect: 510 / 108;
+  --color-ink: #000000;
+  --color-media-shade: #141b2d;
+  --color-media-loading: #d8d4d0;
+  --color-about-media-loading: #e4ddd6;
+}

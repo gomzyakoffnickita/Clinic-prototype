@@ -83,7 +83,7 @@
 }
 
 .contact__hours tr {
-  color: rgb(30 48 94 / 55%);
+  color: color-mix(in srgb, var(--color-navy) 55%, transparent);
 }
 
 .contact__hours tr:hover {

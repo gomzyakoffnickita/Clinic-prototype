@@ -1,41 +1,14 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { HOME } from '../../data/home.js';
 import './WhyChooseUs.css';
 
-const reasons = [
-  {
-    id: 'attention',
-    title: 'Внимание к вам',
-    video: 'WhyChooseUs-1.mp4',
-    description: 'Важно, как вы сами видите желаемые изменения. С этого начинается разговор о ваших ожиданиях и вопросах.',
-  },
-  {
-    id: 'individuality',
-    title: 'Индивидуальный подход',
-    video: 'WhyChooseUs-2.mp4',
-    description: 'У каждого лица свои особенности. Мы смотрим на форму губ и объём в контексте общих пропорций.',
-  },
-  {
-    id: 'clarity',
-    title: 'Понятный диалог',
-    video: 'WhyChooseUs-3.mp4',
-    description: 'На консультации можно обсудить варианты, задать вопросы и понять, что важно учесть перед принятием решения.',
-  },
-  {
-    id: 'proportions',
-    title: 'Естественные пропорции',
-    video: 'WhyChooseUs-4.mp4',
-    description: 'Выразительность складывается из деталей. В центре нашего подхода — гармония черт и сохранение индивидуальности.',
-  },
-];
+const { title, previous, next: nextLabel, reasons } = HOME.whyChooseUs;
 
 const secondsPerReason = 5;
-const editorialAssets = `${import.meta.env.BASE_URL}editorial/`;
 
-function ReasonMedia({ video, active }) {
+function ReasonMedia({ video, poster, active }) {
   const videoRef = useRef(null);
-  const posterFile = video.replace(/\.mp4$/i, '-poster.jpg');
-  const poster = `${editorialAssets}${posterFile}`;
 
   useEffect(() => {
     const element = videoRef.current;
@@ -75,7 +48,7 @@ function ReasonMedia({ video, active }) {
     <video
       key={video}
       ref={videoRef}
-      src={`${editorialAssets}${video}`}
+      src={video}
       poster={poster}
       muted
       loop
@@ -221,7 +194,7 @@ export function WhyChooseUs() {
       <div className="why-choose-us__inner">
         <div className="why-choose-us__header">
           <span className="why-choose-us__counter" aria-hidden="true">{activeIndex + 1} / {reasons.length}</span>
-          <h2 className="why-choose-us__title" id="why-choose-us-title">Почему выбирают нас</h2>
+          <h2 className="why-choose-us__title" id="why-choose-us-title">{title}</h2>
         </div>
 
         <div className="why-choose-us__progress" aria-hidden="true">
@@ -235,7 +208,7 @@ export function WhyChooseUs() {
             aria-labelledby="why-choose-us-title"
             onPointerLeave={() => setInteracting('hovered', false)}
           >
-            {reasons.map(({ id, title, video }, index) => (
+            {reasons.map(({ id, title, video, poster }, index) => (
               <button
                 className="why-choose-us__tab"
                 type="button"
@@ -254,7 +227,7 @@ export function WhyChooseUs() {
                 onKeyDown={(event) => selectWithKeyboard(event, index)}
               >
                 <span className="why-choose-us__frame">
-                  <ReasonMedia video={video} active={index === activeIndex} />
+                  <ReasonMedia video={video} poster={poster} active={index === activeIndex} />
                 </span>
                 <span className="why-choose-us__label">{title}</span>
               </button>
@@ -281,7 +254,7 @@ export function WhyChooseUs() {
 
         <div className="why-choose-us__mobile">
           <div className="why-choose-us__frame">
-            <ReasonMedia video={activeReason.video} active />
+            <ReasonMedia video={activeReason.video} poster={activeReason.poster} active />
           </div>
           <h3 className="why-choose-us__label">{activeReason.title}</h3>
           <div className="why-choose-us__mobile-copy">
@@ -291,8 +264,8 @@ export function WhyChooseUs() {
           </div>
           <span className="visually-hidden" role="status">{announcement}</span>
           <div className="why-choose-us__controls">
-            <button type="button" onClick={() => move(-1)}>Предыдущий</button>
-            <button type="button" onClick={() => move(1)}>Следующий</button>
+            <button type="button" onClick={() => move(-1)}>{previous}</button>
+            <button type="button" onClick={() => move(1)}>{nextLabel}</button>
           </div>
         </div>
       </div>

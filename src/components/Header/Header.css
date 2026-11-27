@@ -35,8 +35,8 @@
   content: "";
   display: block;
   width: 100%;
-  aspect-ratio: 510 / 108;
-  background: black;
+  aspect-ratio: var(--clinic-logo-aspect);
+  background: var(--color-logo);
   mask: var(--clinic-logo) center / contain no-repeat;
 }
 
@@ -144,7 +144,7 @@
 }
 
 .site-menu::backdrop {
-  background: rgb(255 252 248 / 55%);
+  background: color-mix(in srgb, var(--color-warm-white) 55%, transparent);
   backdrop-filter: blur(10px);
 }
 

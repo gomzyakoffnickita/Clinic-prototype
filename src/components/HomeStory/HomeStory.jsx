@@ -1,13 +1,14 @@
 import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { HOME } from "../../data/home.js";
 import "./HomeStory.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const assets = `${import.meta.env.BASE_URL}editorial/`;
 
 export function Method() {
+  const { eyebrow, title, portrait, detail } = HOME.method;
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const cropRef = useRef(null);
@@ -86,20 +87,16 @@ export function Method() {
       ref={sectionRef}
       aria-labelledby="method-title"
     >
-      <p className="home-method__eyebrow">Наша философия</p>
+      <p className="home-method__eyebrow">{eyebrow}</p>
       <h2 className="home-method__title" id="method-title">
-        Каждая процедура в EK CLINIC основана на принципах доказательной
-        медицины и новейших достижениях в области эстетической науки. Наши
-        специалисты сочетают анатомическую точность с научно обоснованными
-        методами, что позволяет добиваться безопасных и долгосрочных
-        результатов.
+        {title}
       </h2>
       <figure className="home-method__portrait" ref={frameRef}>
-        <div className="home-method__crop" ref={cropRef}>
+        <div className="home-method__crop" ref={cropRef} style={{ "--method-portrait-position": portrait.position }}>
           <video
             ref={mediaRef}
-            src={`${assets}home-method__portrait.mp4`}
-            poster={`${assets}home-method__portrait-still.jpg`}
+            src={portrait.video}
+            poster={portrait.poster}
             autoPlay={
               !window.matchMedia("(prefers-reduced-motion: reduce)").matches
             }
@@ -111,7 +108,7 @@ export function Method() {
           />
           <img
             className="home-method__still"
-            src={`${assets}home-method__portrait-still.jpg`}
+            src={portrait.poster}
             alt=""
             loading="lazy"
           />
@@ -121,8 +118,8 @@ export function Method() {
       <div className="home-method__detail">
         <div className="home-method__detail-media">
         <video
-          src={`${assets}home-method__detail.mp4`}
-          poster={`${assets}materials.avif`}
+          src={detail.video}
+          poster={detail.poster}
           autoPlay={
             !window.matchMedia("(prefers-reduced-motion: reduce)").matches
           }
@@ -134,15 +131,13 @@ export function Method() {
         />
         <img
           className="home-method__still"
-          src={`${assets}materials.avif`}
+          src={detail.poster}
           alt=""
           loading="lazy"
         />
         </div>
         <p className="home-method__detail-copy">
-          За каждой процедурой стоит приверженность науке, исследованиям и
-          совершенствованию, как залог безопасных, точных и долговечных
-          результатов.
+          {detail.description}
         </p>
       </div>
       </div>
@@ -151,6 +146,7 @@ export function Method() {
 }
 
 export function FullBleedScene() {
+  const { image, width, height, alt, description, position, desktopPosition } = HOME.fullBleedScene;
   const sceneRef = useRef(null);
   const mediaRef = useRef(null);
 
@@ -187,18 +183,18 @@ export function FullBleedScene() {
       <section className="home-scene" ref={sceneRef}>
         <img
           className="home-scene__media"
-          src={`${assets}home-scene.jpg`}
-          width="1672"
-          height="941"
-          alt="Портрет модели"
+          src={image}
+          width={width}
+          height={height}
+          alt={alt}
+          style={{ "--scene-position": position, "--scene-desktop-position": desktopPosition }}
           ref={mediaRef}
           loading="lazy"
           decoding="async"
         />
       </section>
       <p className="home-statement">
-        Мы сочетаем медицинские знания с эстетическим мастерством, чтобы
-        обеспечить уход, который ощущается как индивидуальный и точный.
+        {description}
       </p>
     </>
   );

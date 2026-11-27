@@ -3,6 +3,7 @@ import { CLINIC } from "../../data/clinic";
 import {
   links,
   defaultPreview,
+  previewImages,
   previewTexts,
   menuLinks,
 } from "../../data/navigation";
@@ -77,7 +78,6 @@ export function SiteMenu({
   servicesHref = "#services",
   approachHref = "#approach",
   contactHref = "#contact",
-  assetBase = `${import.meta.env.BASE_URL}editorial/`,
 }) {
   const [preview, setPreview] = useState(defaultPreview);
   const previousOverflow = useRef("");
@@ -161,12 +161,16 @@ export function SiteMenu({
           ))}
         </nav>
         <div className="site-menu__preview">
-          <img src={`${assetBase}${preview}.jpg`} alt="" loading="lazy" />
+          <img src={previewImages[preview]} alt="" loading="lazy" />
           <p>{previewTexts[preview]}</p>
         </div>
         <div className="site-menu__contact">
           <div className="site-menu__contact-row">
-            <p>{CLINIC.bookingStatus}</p>
+            {CLINIC.bookingUrl ? (
+              <a href={CLINIC.bookingUrl}>{CLINIC.bookingLabel}</a>
+            ) : (
+              <p>{CLINIC.bookingStatus}</p>
+            )}
 
             <a href={contactHref} onClick={followLink}>
               Контакты клиники
@@ -174,17 +178,20 @@ export function SiteMenu({
           </div>
 
           <div className="site-menu__contact-row">
-            <p>Часы работы</p>
+            <p>{CLINIC.hoursLabel}</p>
 
             <p>
-              {CLINIC.openingHours.weekdays}
-              <br />
-              {CLINIC.openingHours.weekend}
+              {CLINIC.openingHours.map(({ days, hours }, index) => (
+                <React.Fragment key={days[0]}>
+                  {index > 0 && <br />}
+                  {days.length > 1 ? `${days[0]}–${days.at(-1)}` : days[0]}: {hours.toLowerCase()}
+                </React.Fragment>
+              ))}
             </p>
           </div>
 
           <p className="site-menu__note">
-            © {CLINIC.copyrightYear} {CLINIC.name} · {CLINIC.demoNote}
+            © {CLINIC.copyrightYear} {CLINIC.name}{CLINIC.demoNote && ` · ${CLINIC.demoNote}`}
           </p>
         </div>
       </div>

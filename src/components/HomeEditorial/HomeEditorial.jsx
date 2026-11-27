@@ -1,30 +1,14 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { HOME } from "../../data/home.js";
 import "./HomeEditorial.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const assets = `${import.meta.env.BASE_URL}editorial/`;
-const introTitle =
-  "В EK CLINIC мы отдаем приоритет индивидуальному подходу. Посетите нашу клинику — здесь вас ждет опыт, который станет важным этапом на пути к желаемому преображению.";
-const features = [
-  {
-    href: "services/",
-    title: "Услуги",
-    image: "feature-links__item-1.jpg",
-    position: "50% 42%",
-  },
-  {
-    href: "services/#catalog",
-    title: "Направления",
-    image: "feature-links__item-2.jpg",
-    position: "50% 48%",
-  },
-];
-
 export function HomeIntro() {
   const introRef = useRef(null);
+  const { title, description, image, contact } = HOME.intro;
 
   useLayoutEffect(() => {
     const intro = introRef.current;
@@ -79,14 +63,14 @@ export function HomeIntro() {
     >
       <img
         className="home-intro__photo"
-        src={`${assets}hero-new.jpg`}
+        src={image}
         alt=""
         loading="lazy"
       />
       <div className="home-intro__copy">
-        <h1 id="intro-title" aria-label={introTitle}>
-          {introTitle.split(" ").map((word) => (
-            <React.Fragment key={word}>
+        <h1 id="intro-title" aria-label={title}>
+          {title.split(" ").map((word, index) => (
+            <React.Fragment key={index}>
               <span className="home-intro__word" aria-hidden="true">
                 {word}
               </span>{" "}
@@ -94,13 +78,9 @@ export function HomeIntro() {
           ))}
         </h1>
         <div className="home-intro__details">
-          <p>
-            В центре подхода EK Clinic — внимание к пропорциям лица и к тому,
-            как вы сами видите желаемые изменения. Знакомство начинается с
-            разговора о ваших пожеланиях и вопросах.
-          </p>
-          <a className="home-intro__contact" href="#contact">
-            <span className="home-intro__contact-label">Контакты</span>
+          <p>{description}</p>
+          <a className="home-intro__contact" href={contact.href}>
+            <span className="home-intro__contact-label">{contact.label}</span>
           </a>
         </div>
       </div>
@@ -143,13 +123,13 @@ export function FeatureLinks() {
     <nav
       className="feature-links"
       ref={sectionRef}
-      aria-label="Услуги и направления"
+      aria-label={HOME.featureLinks.ariaLabel}
     >
-      {features.map(({ href, image, title, position }) => (
+      {HOME.featureLinks.items.map(({ href, image, title, position }) => (
         <a className="feature-links__item" href={href} key={href}>
           <img
             className="feature-links__image"
-            src={`${assets}${image}`}
+            src={image}
             style={{ objectPosition: position }}
             alt=""
             loading="lazy"
@@ -161,40 +141,35 @@ export function FeatureLinks() {
   );
 }
 
-const comparisonAssets = `${import.meta.env.BASE_URL}before-after/`;
-const comparisonCases = [
-  { id: 1, procedure: "" },
-  { id: 2, procedure: "", landscape: true },
-  { id: 3, procedure: "" },
-  { id: 4, procedure: "" },
-];
-
-function ComparisonCard({ id, procedure, landscape }) {
+function ComparisonCard({ id, procedure, before, after, landscape, position }) {
   const [beforePercent, setBeforePercent] = useState(50);
 
   return (
     <figure className="home-approach__case">
       <div
         className={`home-approach__comparison${landscape ? " home-approach__comparison--landscape" : ""}`}
-        style={{ "--comparison-split": `${beforePercent}%` }}
+        style={{
+          "--comparison-split": `${beforePercent}%`,
+          "--comparison-position": position,
+        }}
       >
         <img
           className="home-approach__photo"
-          src={`${comparisonAssets}after-${id}.jpg`}
+          src={after}
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
           className="home-approach__photo home-approach__photo--before"
-          src={`${comparisonAssets}before-${id}.jpg`}
+          src={before}
           alt=""
           loading="lazy"
           decoding="async"
         />
         <div className="home-approach__labels" aria-hidden="true">
-          <span className="home-approach__label">До</span>
-          <span className="home-approach__label">После</span>
+          <span className="home-approach__label">{HOME.approach.labels.before}</span>
+          <span className="home-approach__label">{HOME.approach.labels.after}</span>
         </div>
         <div className="home-approach__divider" aria-hidden="true" />
         <div className="home-approach__handle" aria-hidden="true" />
@@ -207,8 +182,8 @@ function ComparisonCard({ id, procedure, landscape }) {
           onChange={(event) =>
             setBeforePercent(event.currentTarget.valueAsNumber)
           }
-          aria-label={`Сравнить фото до и после. Кейс ${id}${procedure ? `, ${procedure}` : ""}`}
-          aria-valuetext={`До: ${beforePercent}%, после: ${100 - beforePercent}%`}
+          aria-label={`${HOME.approach.labels.compare} ${id}${procedure ? `, ${procedure}` : ""}`}
+          aria-valuetext={`${HOME.approach.labels.before}: ${beforePercent}%, ${HOME.approach.labels.after.toLowerCase()}: ${100 - beforePercent}%`}
         />
       </div>
       {procedure && (
@@ -230,18 +205,15 @@ export function Approach() {
     >
       <div className="home-approach__details">
         <h2 className="home-approach__title" id="approach-title">
-          До и после
+          {HOME.approach.title}
         </h2>
-        <p>
-          Здесь собраны фотографии клиентов EK Clinic до и после процедур. У
-          каждого случая своя исходная форма и свой результат.
-        </p>
+        <p>{HOME.approach.description}</p>
         <p className="home-approach__hint">
-          Передвиньте ползунок, чтобы сравнить кадры.
+          {HOME.approach.hint}
         </p>
       </div>
       <div className="home-approach__gallery">
-        {comparisonCases.map((item) => (
+        {HOME.approach.cases.map((item) => (
           <ComparisonCard key={item.id} {...item} />
         ))}
       </div>
