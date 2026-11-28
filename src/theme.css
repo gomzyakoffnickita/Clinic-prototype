@@ -22,3 +22,18 @@
   --color-media-loading: #d8d4d0;
   --color-about-media-loading: #e4ddd6;
 }
+
+/* Палитра шаблона для восстановленных секций. */
+:is(.hero, .site-header, .site-menu, .why-choose-us, .site-footer, .services-page__hero, .services-page__catalog, .services-scene, .about-profile) {
+  --color-navy: #1e305e;
+  --color-warm-white: #fffcf8;
+  --color-pale-grey: #a79f9c;
+  --color-media-shade: #141b2d;
+  --color-soft-surface: color-mix(in srgb, var(--color-pale-grey) 16%, var(--color-warm-white));
+  --color-line: color-mix(in srgb, var(--color-navy) 25%, var(--color-warm-white));
+}
+
+:is(.services-page__catalog, .about-profile) {
+  color: var(--color-navy);
+  background: var(--color-warm-white);
+}

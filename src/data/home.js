@@ -1,13 +1,33 @@
 import { CLINIC, MEDIA } from "./clinic.js";
 
+const heroAssets = `${import.meta.env.BASE_URL}hero/`;
+const editorialAssets = `${import.meta.env.BASE_URL}editorial/`;
+
 export const HOME = {
   hero: {
-    title: `Клиника косметологии «${CLINIC.name}»`,
-    image: MEDIA.hero,
-    width: 1920,
-    height: 1080,
-    description: "Врачебная косметология и профессиональный уход за кожей.",
-    servicesLabel: "Смотреть услуги",
+    ariaLabel: `Визуальное вступление ${CLINIC.name}`,
+
+    video: {
+      src: `${heroAssets}hero-1.mp4`,
+      poster: `${heroAssets}hero-1-still.jpg`,
+      position: "center 45%",
+      mobilePosition: "32% center",
+    },
+
+    portrait: {
+      position: "center 58%",
+      desktop: {
+        src: `${heroAssets}portrait-f.jpg`,
+        width: 2048,
+        height: 2731,
+      },
+
+      mobile: {
+        src: `${heroAssets}portrait-f-mobile.jpg`,
+        width: 1152,
+        height: 1536,
+      },
+    },
   },
 
   intro: {
@@ -29,8 +49,8 @@ export const HOME = {
       {
         href: "about/#specialists",
         title: "Команда «Мелюр»",
-        image: MEDIA.team,
-        position: "center 37%",
+        image: MEDIA.teamFeature,
+        position: "center 30%",
       },
     ],
   },
@@ -43,25 +63,29 @@ export const HOME = {
       {
         id: "attention",
         title: "Индивидуальный подход",
-        poster: MEDIA.consultation,
+        video: `${editorialAssets}WhyChooseUs-1.mp4`,
+        poster: `${editorialAssets}WhyChooseUs-1-poster.jpg`,
         description: "На первой встрече косметолог уточняет ваши пожелания и обсуждает подходящие варианты ухода.",
       },
       {
         id: "methods",
         title: "Выбор процедур",
-        poster: MEDIA.care,
+        video: `${editorialAssets}WhyChooseUs-2.mp4`,
+        poster: `${editorialAssets}WhyChooseUs-2-poster.jpg`,
         description: "В клинике представлены уходовые, аппаратные, лазерные и инъекционные процедуры.",
       },
       {
         id: "space",
         title: "Пространство клиники",
-        poster: MEDIA.room,
+        video: `${editorialAssets}WhyChooseUs-3.mp4`,
+        poster: `${editorialAssets}WhyChooseUs-3-poster.jpg`,
         description: "Косметологические процедуры и консультации проходят в оборудованных кабинетах «Мелюр».",
       },
       {
         id: "location",
         title: "В центре Брянска",
-        poster: MEDIA.entrance,
+        video: `${editorialAssets}WhyChooseUs-4.mp4`,
+        poster: `${editorialAssets}WhyChooseUs-4-poster.jpg`,
         description: "Клиника открыта ежедневно с 10:00 до 20:00 по адресу Бежицкая, 1, корпус 10.",
       },
     ],

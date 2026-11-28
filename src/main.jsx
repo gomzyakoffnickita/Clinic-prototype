@@ -30,7 +30,7 @@ function App() {
     motion.add(
       "(prefers-reduced-motion: no-preference)",
       () => {
-        const headings = mainRef.current.querySelectorAll("h2:not(#intro-title)");
+        const headings = mainRef.current.querySelectorAll("h2");
 
         headings.forEach((heading) => {
           gsap.fromTo(

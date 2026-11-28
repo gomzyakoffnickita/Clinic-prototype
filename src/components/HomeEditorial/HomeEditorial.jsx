@@ -68,7 +68,7 @@ export function HomeIntro() {
         loading="lazy"
       />
       <div className="home-intro__copy">
-        <h2 id="intro-title" aria-label={title}>
+        <h1 id="intro-title" aria-label={title}>
           {title.split(" ").map((word, index) => (
             <React.Fragment key={index}>
               <span className="home-intro__word" aria-hidden="true">
@@ -76,7 +76,7 @@ export function HomeIntro() {
               </span>{" "}
             </React.Fragment>
           ))}
-        </h2>
+        </h1>
         <div className="home-intro__details">
           <p>{description}</p>
           <a className="home-intro__contact" href={contact.href}>

@@ -234,28 +234,30 @@ function AboutPage() {
           id="specialists"
           aria-labelledby="about-profile-title"
         >
-          <h2 id="about-profile-title">{specialists.title}</h2>
-          <div className="about-profile__grid">
-            {specialists.items.map(({ image, name, role, href }) => (
-              <article className="about-profile__card" key={href}>
-                <img
-                  className="about-profile__portrait"
-                  src={image}
-                  width="380"
-                  height="460"
-                  style={{ objectPosition: specialists.position }}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-                <h3>{name}</h3>
+          <h2 className="visually-hidden" id="about-profile-title">
+            {specialists.title}
+          </h2>
+          {specialists.items.map(({ image, name, role, href }) => (
+            <article className="about-profile__row about-grid" key={href}>
+              <div className="about-profile__identity">
                 <p className="about-profile__role">{role}</p>
+                <h3>{name}</h3>
+              </div>
+              <img
+                className="about-profile__portrait"
+                src={image}
+                style={{ objectPosition: specialists.position }}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <p className="about-profile__copy">
                 <a href={href} aria-label={`${specialists.profileLabel}: ${name}`}>
                   {specialists.profileLabel}
                 </a>
-              </article>
-            ))}
-          </div>
+              </p>
+            </article>
+          ))}
         </section>
 
         <section

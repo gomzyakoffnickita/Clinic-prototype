@@ -18,7 +18,7 @@
   margin-top: 24px;
 }
 
-.home-intro h2 {
+.home-intro h1 {
   margin: 0;
   font: 350 32px / 1 var(--font-editorial);
 }
@@ -155,7 +155,7 @@
     margin-top: 0;
   }
 
-  .home-intro h2 {
+  .home-intro h1 {
     text-indent: 2.5em;
   }
 

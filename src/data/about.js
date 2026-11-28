@@ -25,7 +25,7 @@ export const ABOUT = {
   },
   team: {
     title: "Команда «Мелюр»",
-    portrait: MEDIA.team,
+    portrait: MEDIA.teamPortrait,
     portraitAlt: "Групповая фотография с сайта «Мелюр»",
     portraitPosition: "center 41%",
     detail: MEDIA.detail,

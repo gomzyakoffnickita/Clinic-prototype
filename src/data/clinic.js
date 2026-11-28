@@ -6,6 +6,8 @@ const streetAddress = "Бежицкая, 1, корпус 10";
 export const MEDIA = {
   hero: `${assets}hero.jpg`,
   team: `${assets}portrait.jpg`,
+  teamPortrait: `${assets}team-portrait.jpg`,
+  teamFeature: `${assets}team-feature.jpg`,
   care: `${assets}clinic.jpg`,
   space: `${assets}space.jpg`,
   room: `${assets}room.jpg`,
@@ -21,7 +23,7 @@ export const CLINIC = {
   tagline: "Клиника косметологии",
   logo: `${assets}logo.svg`,
   favicon: "meilleur/favicon.png",
-  footerImage: MEDIA.detail,
+  footerVideo: `${base}editorial/footer.mp4`,
   website: "https://meilleur-cosmetology.ru",
 
   city,
