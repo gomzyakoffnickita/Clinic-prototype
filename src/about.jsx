@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,38 +17,8 @@ function AboutPage() {
   const { hero, intro, team, specialists, consultation, contact } = ABOUT;
   const pageRef = useRef(null);
   const heroRef = useRef(null);
-  const insetVideoRef = useRef(null);
   const dialogRef = useRef(null);
   const [pastHero, setPastHero] = useState(false);
-
-  useEffect(() => {
-    const video = insetVideoRef.current;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let inView = false;
-
-    function syncPlayback() {
-      if (inView && !document.hidden && !reducedMotion.matches) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      syncPlayback();
-    });
-    observer.observe(video);
-    reducedMotion.addEventListener("change", syncPlayback);
-    document.addEventListener("visibilitychange", syncPlayback);
-
-    return () => {
-      observer.disconnect();
-      reducedMotion.removeEventListener("change", syncPlayback);
-      document.removeEventListener("visibilitychange", syncPlayback);
-      video.pause();
-    };
-  }, []);
 
   useLayoutEffect(() => {
     const header = ScrollTrigger.create({
@@ -203,17 +173,11 @@ function AboutPage() {
               {hero.title.map((line, index) => <span key={index}>{line}</span>)}
             </h1>
             <div className="about-hero__inset" data-about-reveal>
-              <video
-                className="about-hero__video"
-                ref={insetVideoRef}
-                src={hero.video}
+              <img
+                className="about-hero__inset-image"
+                src={hero.poster}
                 style={{ objectPosition: hero.videoPosition }}
-                poster={hero.poster}
-                preload="none"
-                muted
-                loop
-                playsInline
-                aria-hidden="true"
+                alt=""
               />
               <p>{hero.description}</p>
             </div>
@@ -232,8 +196,8 @@ function AboutPage() {
           <div className="about-intro__copy">
             <h2 data-about-reveal>{intro.title}</h2>
             <p data-about-reveal>{intro.description}</p>
-            <a className="about-page__link" href={contact.href}>
-              {contact.label}
+            <a className="about-page__link" href="#specialists">
+              Познакомиться с командой
             </a>
           </div>
         </section>
@@ -267,30 +231,31 @@ function AboutPage() {
 
         <section
           className="about-profile"
+          id="specialists"
           aria-labelledby="about-profile-title"
         >
-          <h2 className="visually-hidden" id="about-profile-title">
-            {specialists.title}
-          </h2>
-          {specialists.items.map(({ image, name, description, role, position }) => (
-            <article className="about-profile__row about-grid" key={image}>
-              <div className="about-profile__identity">
-                <p className="about-profile__role">{role ?? specialists.role}</p>
+          <h2 id="about-profile-title">{specialists.title}</h2>
+          <div className="about-profile__grid">
+            {specialists.items.map(({ image, name, role, href }) => (
+              <article className="about-profile__card" key={href}>
+                <img
+                  className="about-profile__portrait"
+                  src={image}
+                  width="380"
+                  height="460"
+                  style={{ objectPosition: specialists.position }}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
                 <h3>{name}</h3>
-              </div>
-              <img
-                className="about-profile__portrait"
-                src={image}
-                style={{ objectPosition: position ?? specialists.position }}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <p className="about-profile__copy">
-                {description || specialists.placeholder}
-              </p>
-            </article>
-          ))}
+                <p className="about-profile__role">{role}</p>
+                <a href={href} aria-label={`${specialists.profileLabel}: ${name}`}>
+                  {specialists.profileLabel}
+                </a>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section

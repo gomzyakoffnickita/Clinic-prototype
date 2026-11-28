@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  min-height: 100svh;
+  min-height: clamp(260px, 52svh, 560px);
   place-items: center;
   overflow: clip;
   padding: 32px var(--gutter);
@@ -14,12 +14,12 @@
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: color-mix(in srgb, var(--color-warm-white) 35%, transparent);
+  background: rgb(37 34 50 / 82%);
   pointer-events: none;
   content: "";
 }
 
-.site-footer__video {
+.site-footer__image {
   position: absolute;
   z-index: -2;
   inset: 0;
@@ -34,15 +34,10 @@
   width: min(35vw, 540px);
   min-width: min(220px, 75vw);
   aspect-ratio: var(--clinic-logo-aspect);
-  color: var(--color-logo);
-  filter: drop-shadow(0 2px 12px color-mix(in srgb, var(--color-warm-white) 65%, transparent));
 }
-
-.site-footer__wordmark::before {
+.site-footer__wordmark img {
   display: block;
   width: 100%;
   height: 100%;
-  background: currentColor;
-  mask: var(--clinic-logo) center / contain no-repeat;
-  content: "";
+  object-fit: contain;
 }

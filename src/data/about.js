@@ -1,59 +1,63 @@
-import { CLINIC } from "./clinic.js";
+import { CLINIC, MEDIA } from "./clinic.js";
 
-const assets = `${import.meta.env.BASE_URL}editorial/`;
-const heroImage = `${assets}about-hero.jpg`;
+const profiles = [
+  ["kirillova.jpg", "Кириллова Юлия Викторовна", "Главный врач", "kirillova-yuliya-viktorovna"],
+  ["rysakova.jpg", "Рысакова Кристина Эдуардовна", "Врач-косметолог, дерматолог", "rysakova-kristina-eduardovna"],
+  ["smolyakova.jpg", "Смолякова Марина Николаевна", "Косметолог-дерматолог", "suschaya-marina-nikolaevna"],
+  ["platek-striyskaya.jpg", "Платек-Стрийская Вера Александровна", "Косметолог", "platek-striyskaya-vera-aleksendrovna"],
+  ["valkova.jpg", "Валькова Мария Михайловна", "Косметолог", "valkova-mariya-mihaylovna"],
+  ["tumakova.jpg", "Тумакова Екатерина Александровна", "Генеральный директор", "tumakova-ekaterina-aleksandrovna"],
+];
 
 export const ABOUT = {
   hero: {
-    title: ["Меняемся.", "Остаёмся собой."],
-    image: heroImage,
-    position: "48% center",
-    video: `${assets}about-hero-inset.mp4`,
-    poster: `${assets}about-hero-inset.jpg`,
-    videoPosition: "center 70%",
-    description: "Пространство эстетики, внимания к деталям и индивидуального подхода.",
+    title: ["О клинике", "«Мелюр»"],
+    image: MEDIA.space,
+    position: "center 45%",
+    poster: MEDIA.consultation,
+    videoPosition: "center 33%",
+    description: "Клиника эстетической косметологии на Бежицкой улице в Брянске.",
   },
   intro: {
     eyebrow: "О клинике",
-    title: `${CLINIC.name} — место, где красота начинается с внимания к деталям. Мы ценим индивидуальность, естественные пропорции и осознанный подход к эстетике.`,
-    description: "Знакомство начинается с разговора. Расскажите, какие изменения вам близки, что хочется сохранить и какие вопросы важно обсудить. Решение о процедуре принимается после консультации специалиста.",
+    title: "Косметология с вниманием к индивидуальности",
+    description: "В «Мелюр» можно получить консультацию косметолога, обсудить состояние кожи и подобрать процедуры или уход.",
   },
   team: {
-    title: `Знакомство с командой ${CLINIC.name}.`,
-    portrait: `${assets}about_team-1.jpg`,
-    portraitAlt: "Портрет в интерьере",
-    portraitPosition: "center 40%",
-    detail: `${assets}about-team__detail-image.jpg`,
+    title: "Команда «Мелюр»",
+    portrait: MEDIA.team,
+    portraitAlt: "Групповая фотография с сайта «Мелюр»",
+    portraitPosition: "center 41%",
+    detail: MEDIA.detail,
     detailPosition: "center",
   },
   specialists: {
     title: "Специалисты клиники",
-    role: "Врач-косметолог",
-    placeholder: "Здесь появится описание специалиста.",
     position: "center 35%",
-    items: [
-      { image: `${assets}about_team-2.jpg`, name: "Кристина Евгеньевна", description: "" },
-      { image: `${assets}about_team-3.jpg`, name: "Ксения Витальевна", description: "" },
-      { image: `${assets}about_team-4.jpg`, name: "Елена Олеговна", description: "" },
-      { image: `${assets}about_team-5.jpg`, name: "Светлана Анатольевна", description: "" },
-    ],
+    profileLabel: "Профиль на сайте клиники",
+    items: profiles.map(([file, name, role, slug]) => ({
+      image: MEDIA.teamDirectory + file,
+      name,
+      role,
+      href: `${CLINIC.website}/team/${slug}`,
+    })),
   },
   consultation: {
     title: "Первая консультация",
-    image: heroImage,
-    position: "76% center",
+    image: MEDIA.room,
+    position: "center",
     steps: [
       {
         title: "Расскажите о пожеланиях",
-        description: "Поделитесь тем, что хочется изменить, какие черты важно сохранить и какие вопросы вас волнуют.",
+        description: "Опишите, что вас беспокоит и какого результата вы ждёте.",
       },
       {
-        title: "Обсудите варианты с врачом",
-        description: "Спросите, какие варианты подходят в вашем случае, чего от них ожидать и какие риски стоит учитывать.",
+        title: "Обсудите варианты",
+        description: "Уточните, какие процедуры подходят вам, чего от них ожидать и какие есть ограничения.",
       },
       {
-        title: "Решите, как двигаться дальше",
-        description: "Уточните, как подготовиться к выбранной процедуре и чего ожидать в период восстановления.",
+        title: "Уточните дальнейшие шаги",
+        description: "Если вы выберете процедуру, спросите, как к ней подготовиться и какие рекомендации соблюдать после неё.",
       },
     ],
   },

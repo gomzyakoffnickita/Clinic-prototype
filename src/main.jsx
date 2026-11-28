@@ -7,11 +7,10 @@ import "./editorial.css";
 import { Header, SiteMenu } from "./components/Header/Header.jsx";
 import { Hero } from "./components/Hero/Hero.jsx";
 import {
-  Approach,
   FeatureLinks,
   HomeIntro,
 } from "./components/HomeEditorial/HomeEditorial.jsx";
-import { FullBleedScene, Method } from "./components/HomeStory/HomeStory.jsx";
+import { Method } from "./components/HomeStory/HomeStory.jsx";
 import { Footer } from "./components/Footer/Footer.jsx";
 import { WhyChooseUs } from "./components/WhyChooseUs/WhyChooseUs.jsx";
 import { Contact } from "./components/Contact/Contact.jsx";
@@ -31,7 +30,7 @@ function App() {
     motion.add(
       "(prefers-reduced-motion: no-preference)",
       () => {
-        const headings = mainRef.current.querySelectorAll("h2");
+        const headings = mainRef.current.querySelectorAll("h2:not(#intro-title)");
 
         headings.forEach((heading) => {
           gsap.fromTo(
@@ -99,8 +98,6 @@ function App() {
           <FeatureLinks />
         </div>
         <Method />
-        <FullBleedScene />
-        <Approach />
         <Contact servicesHref="services/" approachHref="about/" />
       </main>
       <Footer />

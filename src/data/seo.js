@@ -2,18 +2,16 @@ import { CLINIC } from "./clinic.js";
 
 export const SEO = {
   home: {
-    title: `${CLINIC.name} — эстетика в деталях`,
-    description: `Демонстрационный лендинг ${CLINIC.name}: подход к эстетической косметологии, направления и консультация.`,
-    image: "",
+    title: "«Мелюр» — клиника косметологии в Брянске",
+    description: `Услуги, специалисты и контакты клиники «Мелюр» в Брянске. ${CLINIC.demoNote}.`,
+    image: `${CLINIC.website}/wp-content/uploads/2024/10/fon3-1.jpg`,
   },
   about: {
-    title: `О клинике — ${CLINIC.name}`,
-    description: `Подход, пространство и команда ${CLINIC.name}. ${CLINIC.demoNote}.`,
-    image: "",
+    title: "Команда и клиника — «Мелюр», Брянск",
+    description: `Познакомьтесь с клиникой «Мелюр» и её специалистами. ${CLINIC.demoNote}.`,
   },
   services: {
-    title: `Услуги — ${CLINIC.name}`,
-    description: `Направления эстетической косметологии ${CLINIC.name}. ${CLINIC.demoNote}.`,
-    image: "",
+    title: "Услуги косметологии — «Мелюр», Брянск",
+    description: `Каталог услуг клиники «Мелюр» в Брянске. ${CLINIC.demoNote}.`,
   },
 };

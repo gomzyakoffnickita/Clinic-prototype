@@ -42,7 +42,7 @@ function ReasonMedia({ video, poster, active }) {
     };
   }, [active, video]);
 
-  if (!active) return <img src={poster} alt="" loading="lazy" />;
+  if (!active || !video) return <img src={poster} alt="" loading="lazy" />;
 
   return (
     <video

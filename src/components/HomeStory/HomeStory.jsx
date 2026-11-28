@@ -24,18 +24,6 @@ export function Method() {
     detailResize.observe(copy);
     updateDetailSpace();
     const motion = gsap.matchMedia();
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const videos = sectionRef.current.querySelectorAll("video");
-    const syncPlayback = () => {
-      videos.forEach((video) => {
-        if (reducedMotion.matches) video.pause();
-        else video.play().catch(() => {});
-      });
-    };
-
-    reducedMotion.addEventListener("change", syncPlayback);
-    syncPlayback();
-
     motion.add(
       "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
       () => {
@@ -76,7 +64,6 @@ export function Method() {
       detailResize.disconnect();
       section.style.removeProperty("--detail-tail");
       motion.revert();
-      reducedMotion.removeEventListener("change", syncPlayback);
     };
   }, []);
 
@@ -93,21 +80,9 @@ export function Method() {
       </h2>
       <figure className="home-method__portrait" ref={frameRef}>
         <div className="home-method__crop" ref={cropRef} style={{ "--method-portrait-position": portrait.position }}>
-          <video
-            ref={mediaRef}
-            src={portrait.video}
-            poster={portrait.poster}
-            autoPlay={
-              !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            }
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          />
           <img
             className="home-method__still"
+            ref={mediaRef}
             src={portrait.poster}
             alt=""
             loading="lazy"
@@ -115,87 +90,13 @@ export function Method() {
         </div>
       </figure>
       <div className="home-method__detail-track">
-      <div className="home-method__detail">
-        <div className="home-method__detail-media">
-        <video
-          src={detail.video}
-          poster={detail.poster}
-          autoPlay={
-            !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          }
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        />
-        <img
-          className="home-method__still"
-          src={detail.poster}
-          alt=""
-          loading="lazy"
-        />
+        <div className="home-method__detail">
+          <div className="home-method__detail-media">
+            <img className="home-method__still" src={detail.poster} alt="" loading="lazy" />
+          </div>
+          <p className="home-method__detail-copy">{detail.description}</p>
         </div>
-        <p className="home-method__detail-copy">
-          {detail.description}
-        </p>
-      </div>
       </div>
     </section>
-  );
-}
-
-export function FullBleedScene() {
-  const { image, width, height, alt, description, position, desktopPosition } = HOME.fullBleedScene;
-  const sceneRef = useRef(null);
-  const mediaRef = useRef(null);
-
-  useLayoutEffect(() => {
-    const scene = sceneRef.current;
-    const motion = gsap.matchMedia();
-
-    motion.add(
-      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        gsap.fromTo(
-          mediaRef.current,
-          { yPercent: -8 },
-          {
-            yPercent: 8,
-            ease: "none",
-            scrollTrigger: {
-              trigger: scene,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true,
-            },
-          },
-        );
-      },
-      scene,
-    );
-
-    return () => motion.revert();
-  }, []);
-
-  return (
-    <>
-      <section className="home-scene" ref={sceneRef}>
-        <img
-          className="home-scene__media"
-          src={image}
-          width={width}
-          height={height}
-          alt={alt}
-          style={{ "--scene-position": position, "--scene-desktop-position": desktopPosition }}
-          ref={mediaRef}
-          loading="lazy"
-          decoding="async"
-        />
-      </section>
-      <p className="home-statement">
-        {description}
-      </p>
-    </>
   );
 }

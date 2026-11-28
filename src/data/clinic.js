@@ -1,33 +1,51 @@
 const base = import.meta.env?.BASE_URL ?? "/";
+const assets = `${base}meilleur/`;
+const city = "Брянск";
+const streetAddress = "Бежицкая, 1, корпус 10";
+
+export const MEDIA = {
+  hero: `${assets}hero.jpg`,
+  team: `${assets}portrait.jpg`,
+  care: `${assets}clinic.jpg`,
+  space: `${assets}space.jpg`,
+  room: `${assets}room.jpg`,
+  detail: `${assets}detail.jpg`,
+  entrance: `${assets}entrance.jpg`,
+  consultation: `${assets}consultation.jpg`,
+  teamDirectory: `${assets}team/`,
+  services: `${assets}services/`,
+};
 
 export const CLINIC = {
-  name: "EK Clinic",
-  tagline: "Эстетическая косметология",
-  logo: `${base}ek-clinic-wordmark.svg`,
-  favicon: "favicon.svg",
-  footerVideo: `${base}editorial/footer.mp4`,
+  name: "Мелюр",
+  tagline: "Клиника косметологии",
+  logo: `${assets}logo.svg`,
+  favicon: "meilleur/favicon.png",
+  footerImage: MEDIA.detail,
+  website: "https://meilleur-cosmetology.ru",
 
-  address: "",
-  phone: "",
-  email: "",
+  city,
+  streetAddress,
+  address: `${city}, ул. ${streetAddress}`,
+  phone: "+7 (905) 104-54-44",
+  email: "info@meilleur-cosmetology.ru",
   socials: [],
-  externalLinks: [],
-
-  openingHours: [
-    { days: ["Пн", "Вт", "Ср", "Чт", "Пт"], hours: "10:00–20:00" },
-    { days: ["Сб", "Вс"], hours: "Выходной" },
+  externalLinks: [
+    { label: "+7 (4832) 60-61-01", href: "tel:+74832606101" },
+    { label: "Как добраться", href: "https://meilleur-cosmetology.ru/kontakty" },
   ],
+
+  openingHours: [{ days: ["Пн–Вс"], hours: "10:00–20:00" }],
   hoursLabel: "Часы работы",
 
   bookingStatus: "Онлайн-запись пока недоступна",
-  bookingUrl: "",
-  bookingLabel: "Записаться на консультацию",
-  copyrightYear: 2026,
+  bookingUrl: "https://n476245.yclients.com/",
+  bookingLabel: "Записаться онлайн",
   demoNote: "Демонстрационная концепция сайта",
 
   contact: {
-    title: "Эстетика, неподвластная времени.",
-    consultationLabel: "Консультация",
-    linksTitle: "Узнайте больше о нашем подходе",
+    title: "Как нас найти",
+    consultationLabel: "Запись в клинику",
+    linksTitle: "О клинике и процедурах",
   },
 };

@@ -191,7 +191,7 @@ export function SiteMenu({
           </div>
 
           <p className="site-menu__note">
-            © {CLINIC.copyrightYear} {CLINIC.name}{CLINIC.demoNote && ` · ${CLINIC.demoNote}`}
+            {CLINIC.demoNote}
           </p>
         </div>
       </div>

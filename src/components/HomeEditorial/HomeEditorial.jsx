@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HOME } from "../../data/home.js";
@@ -68,7 +68,7 @@ export function HomeIntro() {
         loading="lazy"
       />
       <div className="home-intro__copy">
-        <h1 id="intro-title" aria-label={title}>
+        <h2 id="intro-title" aria-label={title}>
           {title.split(" ").map((word, index) => (
             <React.Fragment key={index}>
               <span className="home-intro__word" aria-hidden="true">
@@ -76,7 +76,7 @@ export function HomeIntro() {
               </span>{" "}
             </React.Fragment>
           ))}
-        </h1>
+        </h2>
         <div className="home-intro__details">
           <p>{description}</p>
           <a className="home-intro__contact" href={contact.href}>
@@ -138,85 +138,5 @@ export function FeatureLinks() {
         </a>
       ))}
     </nav>
-  );
-}
-
-function ComparisonCard({ id, procedure, before, after, landscape, position }) {
-  const [beforePercent, setBeforePercent] = useState(50);
-
-  return (
-    <figure className="home-approach__case">
-      <div
-        className={`home-approach__comparison${landscape ? " home-approach__comparison--landscape" : ""}`}
-        style={{
-          "--comparison-split": `${beforePercent}%`,
-          "--comparison-position": position,
-        }}
-      >
-        <img
-          className="home-approach__photo"
-          src={after}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          className="home-approach__photo home-approach__photo--before"
-          src={before}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <div className="home-approach__labels" aria-hidden="true">
-          <span className="home-approach__label">{HOME.approach.labels.before}</span>
-          <span className="home-approach__label">{HOME.approach.labels.after}</span>
-        </div>
-        <div className="home-approach__divider" aria-hidden="true" />
-        <div className="home-approach__handle" aria-hidden="true" />
-        <input
-          className="home-approach__range"
-          type="range"
-          min="0"
-          max="100"
-          value={beforePercent}
-          onChange={(event) =>
-            setBeforePercent(event.currentTarget.valueAsNumber)
-          }
-          aria-label={`${HOME.approach.labels.compare} ${id}${procedure ? `, ${procedure}` : ""}`}
-          aria-valuetext={`${HOME.approach.labels.before}: ${beforePercent}%, ${HOME.approach.labels.after.toLowerCase()}: ${100 - beforePercent}%`}
-        />
-      </div>
-      {procedure && (
-        <figcaption className="home-approach__procedure">
-          {procedure}
-        </figcaption>
-      )}
-    </figure>
-  );
-}
-
-export function Approach() {
-  return (
-    <section
-      id="approach"
-      className="home-approach editorial-section editorial-grid"
-      tabIndex={-1}
-      aria-labelledby="approach-title"
-    >
-      <div className="home-approach__details">
-        <h2 className="home-approach__title" id="approach-title">
-          {HOME.approach.title}
-        </h2>
-        <p>{HOME.approach.description}</p>
-        <p className="home-approach__hint">
-          {HOME.approach.hint}
-        </p>
-      </div>
-      <div className="home-approach__gallery">
-        {HOME.approach.cases.map((item) => (
-          <ComparisonCard key={item.id} {...item} />
-        ))}
-      </div>
-    </section>
   );
 }

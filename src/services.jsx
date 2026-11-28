@@ -28,7 +28,7 @@ function ServicesPage() {
       trigger: heroRef.current,
       start: "bottom top+=48",
       end: "max",
-      onToggle: ({ isActive }) => setPastHero(isActive),
+      onUpdate: (self) => setPastHero(self.scroll() >= self.start),
       onRefresh: (self) => setPastHero(self.scroll() >= self.start),
     });
     const sections = catalogRef.current.querySelectorAll(
@@ -37,36 +37,14 @@ function ServicesPage() {
     const sectionTriggers = [...sections].map((section) =>
       ScrollTrigger.create({
         trigger: section,
-        start: "top 45%",
-        end: "bottom 45%",
+        start: "top 35%",
+        end: "bottom 35%",
         onEnter: () => setActiveId(section.id),
         onEnterBack: () => setActiveId(section.id),
       }),
     );
 
     const motion = gsap.matchMedia();
-    motion.add(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        sections.forEach((section) => {
-          if (!section.querySelector("img")) return;
-          gsap.fromTo(
-            section.querySelector("img"),
-            { yPercent: -50 },
-            {
-              yPercent: 50,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section.querySelector(".services-page__media"),
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        });
-      },
-    );
     motion.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.fromTo(
         ".services-journey__images",
@@ -108,19 +86,6 @@ function ServicesPage() {
           },
         },
       );
-      gsap.utils.toArray(".services-page__reveal").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { autoAlpha: 0, y: 24 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power2.out",
-            scrollTrigger: { trigger: element, start: "top 88%", once: true },
-          },
-        );
-      });
     });
     const target = document.getElementById(window.location.hash.slice(1));
     const anchorFrame = target
@@ -177,24 +142,9 @@ function ServicesPage() {
               approachHref="../about/"
             />
           </div>
-          <video
-            src={hero.video}
-            autoPlay={
-              !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-            }
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-          />
+          <img className="services-page__hero-image" src={hero.image} alt="" fetchPriority="high" />
           <div className="services-page__hero-copy">
-            <p className="services-page__eyebrow">{hero.eyebrow}</p>
-            <h1 id="services-title">
-              {hero.title.map((line, index) => <span key={index}>{line}</span>)}
-            </h1>
-          </div>
-          <div className="services-page__hero-description">
+            <h1 id="services-title">{hero.title}</h1>
             <p>{hero.description}</p>
             <a
               href={hero.link.href}
@@ -232,44 +182,18 @@ function ServicesPage() {
           ref={catalogRef}
           aria-labelledby="catalog-title"
         >
-          <div className="services-page__catalog-head services-page__reveal">
-            <p className="services-page__eyebrow">{catalog.eyebrow}</p>
-            <h2 id="catalog-title">{catalog.title}</h2>
-          </div>
+          <h2 className="services-page__catalog-title" id="catalog-title">{catalog.title}</h2>
           <div className="services-page__catalog-grid">
-            <nav
-              className="services-page__index"
-              aria-label={catalog.ariaLabel}
-            >
-              {groups.map((group) => (
-                <div
-                  className={`services-page__index-item${activeId === group.id ? " services-page__index-item--active" : ""}`}
-                  key={group.id}
+            <nav className="services-page__index" aria-label={catalog.ariaLabel}>
+              {groups.map(({ id, title }) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  onClick={focusGroup}
+                  aria-current={activeId === id ? "location" : undefined}
                 >
-                  <a
-                    href={`#${group.id}`}
-                    onClick={focusGroup}
-                    aria-current={
-                      activeId === group.id ? "location" : undefined
-                    }
-                  >
-                    <span>({Number(group.number)}).</span>
-                    <span>{group.title}</span>
-                  </a>
-                  <div
-                    className="services-page__index-reveal"
-                    aria-hidden={activeId !== group.id}
-                  >
-                    <div className="services-page__index-copy">
-                      <p>{group.description}</p>
-                      <ul>
-                        {group.topics.map((topic) => (
-                          <li key={topic}>{topic}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                  {title}
+                </a>
               ))}
             </nav>
             <div className="services-page__groups">
@@ -281,27 +205,15 @@ function ServicesPage() {
                   tabIndex={-1}
                   aria-labelledby={`${group.id}-title`}
                 >
-                  <div className="services-page__media">
-                    {group.image && (
-                      <img
-                        src={group.image}
-                        alt={group.imageAlt ?? catalog.imageAlt}
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
-                  <div className="services-page__group-copy services-page__reveal">
-                    <span className="services-page__eyebrow">
-                      {group.number} / {String(groups.length).padStart(2, "0")}
-                      {group.image ? ` · ${catalog.imageCaption}` : ""}
-                    </span>
-                    <h3 id={`${group.id}-title`} tabIndex={-1}>
-                      {group.title}
-                    </h3>
+                  {group.image && (
+                    <img className="services-page__media" src={group.image} alt="" loading="lazy" />
+                  )}
+                  <div className="services-page__group-copy">
+                    <h3 id={`${group.id}-title`} tabIndex={-1}>{group.title}</h3>
                     <p>{group.description}</p>
                     <ul>
-                      {group.topics.map((topic) => (
-                        <li key={topic}>{topic}</li>
+                      {group.topics.map(({ label, href }) => (
+                        <li key={href}><a href={href}>{label}</a></li>
                       ))}
                     </ul>
                   </div>
@@ -343,9 +255,6 @@ function ServicesPage() {
                 <img key={src} src={src} alt={alt} style={{ objectPosition: position }} loading="lazy" />
               ))}
             </div>
-          </div>
-          <div className="services-journey__labels">
-            {journey.labels.map((label) => <span key={label}>{label}</span>)}
           </div>
         </section>
 

@@ -75,7 +75,7 @@ export function Contact({ servicesHref = "#services", approachHref = "#approach"
       </div>
 
       <div className="contact__bottom">
-        <p>© {CLINIC.copyrightYear} {CLINIC.name}{CLINIC.demoNote && ` · ${CLINIC.demoNote}`}</p>
+        <p>{CLINIC.demoNote} · <a href={CLINIC.website}>Официальный сайт клиники «{CLINIC.name}»</a></p>
       </div>
     </section>
   );

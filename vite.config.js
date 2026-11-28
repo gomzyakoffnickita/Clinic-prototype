@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import { CLINIC } from "./src/data/clinic.js";
 import { SEO } from "./src/data/seo.js";
 
-const base = "/Clinic-prototype/";
+const base = "/Clinic-prototype/meilleur/";
 const input = {
   home: resolve(import.meta.dirname, "index.html"),
   services: resolve(import.meta.dirname, "services/index.html"),
@@ -36,6 +36,7 @@ export default defineConfig({
         const tags = [
           { tag: "title", children: escapeHtmlText(meta.title) },
           { tag: "meta", attrs: { name: "description", content: meta.description } },
+          { tag: "meta", attrs: { name: "robots", content: "noindex" } },
           { tag: "meta", attrs: { property: "og:title", content: meta.title } },
           { tag: "meta", attrs: { property: "og:description", content: meta.description } },
           { tag: "meta", attrs: { property: "og:type", content: "website" } },

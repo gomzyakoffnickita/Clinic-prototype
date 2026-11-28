@@ -1,49 +1,28 @@
-import { CLINIC } from "./clinic.js";
-
-const assets = `${import.meta.env.BASE_URL}editorial/`;
+import { CLINIC, MEDIA } from "./clinic.js";
 
 export const links = [
-  {
-    href: "#services",
-    label: "Услуги",
-    preview: "lips",
-  },
-  {
-    href: "#approach",
-    label: "О клинике",
-    preview: "portrait",
-  },
-  {
-    href: "#contact",
-    label: "Контакты",
-    preview: "materials",
-  },
+  { href: "#services", label: "Услуги", preview: "care" },
+  { href: "#approach", label: "О клинике", preview: "team" },
+  { href: "#contact", label: "Контакты", preview: "entrance" },
 ];
 
 export const defaultPreview = "consultation";
 
 export const previewImages = {
-  consultation: `${assets}consultation.jpg`,
-  lips: `${assets}lips.jpg`,
-  portrait: `${assets}portrait.jpg`,
-  materials: `${assets}materials.jpg`,
+  consultation: MEDIA.consultation,
+  care: MEDIA.care,
+  team: MEDIA.team,
+  entrance: MEDIA.entrance,
 };
 
 export const previewTexts = {
-  consultation: `Добро пожаловать в ${CLINIC.name} — пространство эстетики и заботы о вашей красоте. Здесь естественность встречается с современным подходом к косметологии.`,
-
-  lips: "Подчеркнуть природную красоту, сохранив индивидуальность. Познакомьтесь с нашими процедурами, направленными на гармонию и эстетику лица.",
-
-  portrait: `${CLINIC.name} — место, где красота начинается с внимания к деталям. Мы ценим индивидуальность, естественные пропорции и осознанный подход к эстетике.`,
-
-  materials: `Первый шаг к знакомству с ${CLINIC.name} — консультация специалиста. Свяжитесь с нами удобным способом, чтобы обсудить ваши пожелания и возможности коррекции.`,
+  consultation: `Клиника косметологии «${CLINIC.name}» в Брянске.`,
+  care: "Уход за кожей, аппаратные, лазерные и инъекционные процедуры.",
+  team: "Познакомьтесь с клиникой и её специалистами.",
+  entrance: `${CLINIC.address}. Работаем ежедневно с 10:00 до 20:00.`,
 };
 
 export const menuLinks = [
-  {
-    href: "#top",
-    label: "Главная",
-    preview: defaultPreview,
-  },
+  { href: "#top", label: "Главная", preview: defaultPreview },
   ...links,
 ];

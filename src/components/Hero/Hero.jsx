@@ -1,171 +1,36 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useLayoutEffect, useRef } from "react";
+import { CLINIC } from "../../data/clinic.js";
+import { HOME } from "../../data/home.js";
 import { Header } from "../Header/Header.jsx";
-import { HOME } from "../../data/home";
 import "./Hero.css";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const heroContent = HOME.hero;
-const reducedMotion = "(prefers-reduced-motion: reduce)";
-const mobileMedia = "(max-width: 767px)";
 
 export function Hero({ onMenu, onExitChange }) {
   const heroRef = useRef(null);
-  const videoRef = useRef(null);
-  const portraitRef = useRef(null);
-  const [reduce, setReduce] = useState(
-    () => window.matchMedia(reducedMotion).matches,
-  );
-  const [exited, setExited] = useState(false);
-  const [portraitVisible, setPortraitVisible] = useState(false);
-
-  useEffect(() => {
-    const motionPreference = window.matchMedia(reducedMotion);
-    const updateMotion = () => setReduce(motionPreference.matches);
-    motionPreference.addEventListener("change", updateMotion);
-
-    return () => {
-      motionPreference.removeEventListener("change", updateMotion);
-    };
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    let visible = false;
-
-    function syncPlayback() {
-      if (visible && !reduce && !document.hidden) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.intersectionRatio >= 0.15;
-        syncPlayback();
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(video.closest(".hero__frame"));
-    document.addEventListener("visibilitychange", syncPlayback);
-
-    return () => {
-      observer.disconnect();
-      document.removeEventListener("visibilitychange", syncPlayback);
-      video.pause();
-    };
-  }, [reduce]);
+  const { title, image, width, height, description, servicesLabel } = HOME.hero;
 
   useLayoutEffect(() => {
     const hero = heroRef.current;
-    const updateHeader = () => {
-      const pastHero = hero.getBoundingClientRect().bottom <= 52;
-      setExited(pastHero);
-      onExitChange(pastHero);
-    };
+    const updateHeader = () => onExitChange(hero.getBoundingClientRect().bottom <= 52);
     const observer = new IntersectionObserver(updateHeader, {
       rootMargin: "-52px 0px 0px",
     });
     observer.observe(hero);
     updateHeader();
 
-    const updateNavigation = ({ isActive }) => setPortraitVisible(isActive);
-    const portraitTrigger = ScrollTrigger.create({
-      trigger: portraitRef.current,
-      start: "top center",
-      end: "bottom top",
-      onToggle: updateNavigation,
-      onRefresh: updateNavigation,
-    });
-
-    const motion = gsap.matchMedia();
-    motion.add(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        hero.querySelectorAll(".hero__asset").forEach((asset) => {
-          gsap.fromTo(
-            asset,
-            { yPercent: -8 },
-            {
-              yPercent: 8,
-              ease: "none",
-              scrollTrigger: {
-                trigger: asset.parentElement,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            },
-          );
-        });
-      },
-      hero,
-    );
-
-    return () => {
-      observer.disconnect();
-      portraitTrigger.kill();
-      motion.revert();
-    };
+    return () => observer.disconnect();
   }, [onExitChange]);
 
   return (
-    <section className="hero" ref={heroRef} aria-label={heroContent.ariaLabel}>
-      <div className="hero__frame">
-        <video
-          ref={videoRef}
-          className="hero__asset hero__asset--video"
-          src={reduce ? undefined : heroContent.video.src}
-          poster={heroContent.video.poster}
-          style={{
-            "--hero-video-position": heroContent.video.position,
-            "--hero-video-mobile-position": heroContent.video.mobilePosition,
-          }}
-          muted
-          loop
-          playsInline
-          preload="none"
-          aria-hidden="true"
-        />
+    <section className="hero" ref={heroRef} aria-labelledby="hero-title">
+      <div className="hero__header">
+        <Header transparent onMenu={onMenu} servicesHref="services/" approachHref="about/" />
       </div>
-      <div className="hero__frame" ref={portraitRef}>
-        <picture>
-          <source
-            media={mobileMedia}
-            srcSet={heroContent.portrait.mobile.src}
-            width={heroContent.portrait.mobile.width}
-            height={heroContent.portrait.mobile.height}
-          />
-          <img
-            className="hero__asset hero__asset--still"
-            src={heroContent.portrait.desktop.src}
-            style={{ objectPosition: heroContent.portrait.position }}
-            width={heroContent.portrait.desktop.width}
-            height={heroContent.portrait.desktop.height}
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
-      </div>
-      <div className="hero__navigation">
-        <div
-          className={`hero__navigation-row${portraitVisible ? " hero__navigation-row--portrait" : ""}`}
-          hidden={exited}
-        >
-          <Header
-            hero
-            onMenu={onMenu}
-            servicesHref="services/"
-            approachHref="about/"
-          />
-        </div>
+      <img className="hero__image" src={image} width={width} height={height} alt="" fetchPriority="high" />
+      <div className="hero__copy">
+        <p className="hero__location">{CLINIC.city} · {CLINIC.streetAddress}</p>
+        <h1 id="hero-title">{title}</h1>
+        <p className="hero__description">{description}</p>
+        <a className="hero__action" href="services/#catalog">{servicesLabel}</a>
       </div>
     </section>
   );
